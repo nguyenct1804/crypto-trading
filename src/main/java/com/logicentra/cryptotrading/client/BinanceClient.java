@@ -8,6 +8,6 @@ import java.util.List;
 @FeignClient(name = "binanceClient", url = "https://api.binance.com")
 public interface BinanceClient {
 
-    @GetMapping("/api/v1/ticker/bookTicker")
+    @GetMapping("/api/v3/ticker/bookTicker")
     List<BinanceTickerDto> getTickers();
 }
