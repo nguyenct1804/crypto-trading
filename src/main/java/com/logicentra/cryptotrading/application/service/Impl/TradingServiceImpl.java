@@ -1,14 +1,14 @@
-package com.logicentra.cryptotrading.service.Impl;
+package com.logicentra.cryptotrading.application.service.Impl;
 
-import com.logicentra.cryptotrading.dto.TradeRequestDto;
-import com.logicentra.cryptotrading.entity.CryptoPrice;
-import com.logicentra.cryptotrading.entity.TradeTransaction;
-import com.logicentra.cryptotrading.entity.TradeType;
-import com.logicentra.cryptotrading.entity.Wallet;
-import com.logicentra.cryptotrading.repository.CryptoPriceRepository;
-import com.logicentra.cryptotrading.repository.TradeTransactionRepository;
-import com.logicentra.cryptotrading.repository.WalletRepository;
-import com.logicentra.cryptotrading.service.TradingService;
+import com.logicentra.cryptotrading.application.dto.TradeRequestDto;
+import com.logicentra.cryptotrading.domain.entity.CryptoPrice;
+import com.logicentra.cryptotrading.domain.entity.TradeTransaction;
+import com.logicentra.cryptotrading.domain.entity.TradeType;
+import com.logicentra.cryptotrading.domain.entity.Wallet;
+import com.logicentra.cryptotrading.infrastructure.repository.CryptoPriceRepository;
+import com.logicentra.cryptotrading.infrastructure.repository.TradeTransactionRepository;
+import com.logicentra.cryptotrading.infrastructure.repository.WalletRepository;
+import com.logicentra.cryptotrading.application.service.TradingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,20 +42,15 @@ public class TradingServiceImpl implements TradingService {
             executeSell(userId, cryptoCurrency, request.getAmount(), latestPrice.getBestBid(), request.getSymbol());
         }
     }
-
     private void executeBuy(Long userId, String cryptoCurrency, BigDecimal amount, BigDecimal price, String symbol) {
         BigDecimal totalUsdtNeeded = amount.multiply(price);
+
         Wallet usdtWallet = getWallet(userId, "USDT");
-
-        if (usdtWallet.getBalance().compareTo(totalUsdtNeeded) < 0) {
-            throw new IllegalStateException("Insufficient USDT balance");
-        }
-
-        usdtWallet.setBalance(usdtWallet.getBalance().subtract(totalUsdtNeeded));
+        usdtWallet.debit(totalUsdtNeeded);
         walletRepository.save(usdtWallet);
 
         Wallet cryptoWallet = getOrCreateWallet(userId, cryptoCurrency);
-        cryptoWallet.setBalance(cryptoWallet.getBalance().add(amount));
+        cryptoWallet.credit(amount);
         walletRepository.save(cryptoWallet);
 
         saveTransaction(userId, symbol, TradeType.BUY, price, amount, totalUsdtNeeded);
@@ -63,17 +58,12 @@ public class TradingServiceImpl implements TradingService {
 
     private void executeSell(Long userId, String cryptoCurrency, BigDecimal amount, BigDecimal price, String symbol) {
         Wallet cryptoWallet = getWallet(userId, cryptoCurrency);
-
-        if (cryptoWallet.getBalance().compareTo(amount) < 0) {
-            throw new IllegalStateException("Insufficient " + cryptoCurrency + " balance");
-        }
-
-        cryptoWallet.setBalance(cryptoWallet.getBalance().subtract(amount));
+        cryptoWallet.debit(amount);
         walletRepository.save(cryptoWallet);
 
         BigDecimal totalUsdtEarned = amount.multiply(price);
         Wallet usdtWallet = getOrCreateWallet(userId, "USDT");
-        usdtWallet.setBalance(usdtWallet.getBalance().add(totalUsdtEarned));
+        usdtWallet.credit(totalUsdtEarned);
         walletRepository.save(usdtWallet);
 
         saveTransaction(userId, symbol, TradeType.SELL, price, amount, totalUsdtEarned);

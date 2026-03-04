@@ -1,10 +1,10 @@
-package com.logicentra.cryptotrading.controller;
+package com.logicentra.cryptotrading.presentation.controller;
 
-import com.logicentra.cryptotrading.dto.TradeRequestDto;
-import com.logicentra.cryptotrading.entity.CryptoPrice;
-import com.logicentra.cryptotrading.entity.TradeTransaction;
-import com.logicentra.cryptotrading.entity.Wallet;
-import com.logicentra.cryptotrading.service.TradingService;
+import com.logicentra.cryptotrading.application.dto.TradeRequestDto;
+import com.logicentra.cryptotrading.domain.entity.CryptoPrice;
+import com.logicentra.cryptotrading.domain.entity.TradeTransaction;
+import com.logicentra.cryptotrading.domain.entity.Wallet;
+import com.logicentra.cryptotrading.application.service.TradingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

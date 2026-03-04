@@ -1,4 +1,4 @@
-package com.logicentra.cryptotrading.dto;
+package com.logicentra.cryptotrading.application.dto;
 
 import lombok.Data;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.logicentra.cryptotrading;
+package com.logicentra.cryptotrading.presentation.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

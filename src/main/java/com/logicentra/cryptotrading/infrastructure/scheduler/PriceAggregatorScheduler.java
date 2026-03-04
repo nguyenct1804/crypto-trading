@@ -1,11 +1,11 @@
-package com.logicentra.cryptotrading.scheduler;
+package com.logicentra.cryptotrading.infrastructure.scheduler;
 
-import com.logicentra.cryptotrading.client.BinanceClient;
-import com.logicentra.cryptotrading.client.HuobiClient;
-import com.logicentra.cryptotrading.dto.BinanceTickerDto;
-import com.logicentra.cryptotrading.dto.HuobiTickerDto;
-import com.logicentra.cryptotrading.entity.CryptoPrice;
-import com.logicentra.cryptotrading.repository.CryptoPriceRepository;
+import com.logicentra.cryptotrading.infrastructure.client.BinanceClient;
+import com.logicentra.cryptotrading.infrastructure.client.HuobiClient;
+import com.logicentra.cryptotrading.application.dto.BinanceTickerDto;
+import com.logicentra.cryptotrading.application.dto.HuobiTickerDto;
+import com.logicentra.cryptotrading.domain.entity.CryptoPrice;
+import com.logicentra.cryptotrading.infrastructure.repository.CryptoPriceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

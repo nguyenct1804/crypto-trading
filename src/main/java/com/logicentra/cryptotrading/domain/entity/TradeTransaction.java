@@ -1,4 +1,4 @@
-package com.logicentra.cryptotrading.entity;
+package com.logicentra.cryptotrading.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,26 +7,36 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "crypto_price")
+@Table(name = "trade_history")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CryptoPrice {
+public class TradeTransaction {
     //This can be a UUID in real project to make sure it is unique in microservices environment
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     @Column(nullable = false, length = 10)
     private String symbol;
 
-    @Column(name = "best_bid", nullable = false, precision = 19, scale = 8)
-    private BigDecimal bestBid;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 4)
+    private TradeType type;
 
-    @Column(name = "best_ask", nullable = false, precision = 19, scale = 8)
-    private BigDecimal bestAsk;
+    @Column(nullable = false, precision = 19, scale = 8)
+    private BigDecimal price;
+
+    @Column(nullable = false, precision = 19, scale = 8)
+    private BigDecimal amount;
+
+    @Column(nullable = false, precision = 19, scale = 8)
+    private BigDecimal total;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

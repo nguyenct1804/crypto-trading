@@ -1,6 +1,6 @@
-package com.logicentra.cryptotrading.dto;
+package com.logicentra.cryptotrading.application.dto;
 
-import com.logicentra.cryptotrading.entity.TradeType;
+import com.logicentra.cryptotrading.domain.entity.TradeType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

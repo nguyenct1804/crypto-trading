@@ -1,6 +1,6 @@
-package com.logicentra.cryptotrading.repository;
+package com.logicentra.cryptotrading.infrastructure.repository;
 
-import com.logicentra.cryptotrading.entity.CryptoPrice;
+import com.logicentra.cryptotrading.domain.entity.CryptoPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

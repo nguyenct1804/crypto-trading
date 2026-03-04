@@ -1,7 +1,7 @@
 package com.logicentra.cryptotrading.config;
 
-import com.logicentra.cryptotrading.entity.Wallet;
-import com.logicentra.cryptotrading.repository.WalletRepository;
+import com.logicentra.cryptotrading.domain.entity.Wallet;
+import com.logicentra.cryptotrading.infrastructure.repository.WalletRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
